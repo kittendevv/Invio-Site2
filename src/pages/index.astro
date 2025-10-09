@@ -1,0 +1,154 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import Stats from '~/components/widgets/Stats.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import ImageCarousel from '~/components/widgets/ImageCarousel.astro';
+
+const metadata = {
+  title: 'Invio — Self-hosted invoicing without the bloat',
+  ignoreTitleTemplate: true,
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+
+  <Hero
+    actions={[
+      {
+        variant: 'primary',
+        text: 'View on Github',
+        href: 'https://github.com/arthelokyo/astrowind',
+        target: '_blank',
+        icon: 'tabler:brand-github',
+      },
+      { text: 'Try Demo', href: 'https://demo.invio.dev' },
+    ]}
+    image={{ src: '~/assets/images/dashboard-screenshot.png', alt: 'Invio Dashboard Screenshot' }}
+  >
+    <Fragment slot="title">
+      Self-hosted invoicing without the <span style="color: var(--aw-color-primary);">bloat</span>
+    </Fragment>
+  </Hero>
+
+  <ImageCarousel
+      id="gallery"
+      images={[
+        { src: '~/assets/images/invoices/1.png', alt: 'Invoice 1' },
+        { src: '~/assets/images/invoices/2.png', alt: 'Invoice 2' },
+        { src: '~/assets/images/invoices/3.png', alt: 'Invoice 3' },
+        { src: '~/assets/images/invoices/4.png', alt: 'Invoice 4' },
+        { src: '~/assets/images/invoices/5.png', alt: 'Invoice 5' },
+        { src: '~/assets/images/invoices/6.png', alt: 'Invoice 6' },
+        { src: '~/assets/images/invoices/7.png', alt: 'Invoice 7' },
+        { src: '~/assets/images/invoices/8.png', alt: 'Invoice 8' },
+      ]}
+      speed={10}
+    />
+  <!-- Features Widget *************** -->
+
+  <Features
+    id="features"
+    tagline="Features"
+    title="Why choose Invio?"
+    items={[
+      {
+        title: 'Built for doing, not configuring',
+        description:
+          'Create an invoice, send a link, get paid. No CRMs, projects, or bloat getting in your way.',
+        icon: 'tabler:pencil',
+      },
+      {
+        title: 'You really own it',
+        description:
+          'Self-hosted by default. Your data lives where you put it, and exporting is always an option.',
+        icon: 'tabler:database-smile',
+      },
+      {
+        title: 'Fast & dependable',
+        description:
+          'Deno + Fresh on the frontend and Hono + SQLite on the backend keep things simple and quick.',
+        icon: 'tabler:gauge',
+      },
+      {
+        title: 'Client-friendly',
+        description:
+          'Share a secure public link—no accounts or passwords required to view invoices.',
+        icon: 'tabler:mood-smile',
+      },
+    ]}
+  />
+
+  <!-- FAQs Widget ******************* -->
+
+  <FAQs
+    title="Frequently Asked Questions"
+    tagline="FAQs"
+    classes={{ container: 'max-w-6xl' }}
+    items={[
+      {
+        title: 'What is Invio?',
+        description:
+          "A self‑hosted, open‑source app for creating and sharing invoices. It’s released under The Unlicense and doesn’t include payment processing.",
+      },
+      {
+        title: 'How do I deliver invoices to clients?',
+        description:
+          'Export a PDF or generate a quick shareable link, then send it via your preferred channel.',
+      },
+      {
+        title: 'Is Invio free?',
+        description:
+          "Yes. It’s free and open source under The Unlicense. You only cover your own hosting costs.",
+      },
+      {
+        title: "Why Invio?",
+        description:
+          "Simple invoice creation, full data ownership on your own server, no vendor lock‑in, and straightforward delivery via PDF or shareable link.",
+      },
+    ]}
+  />
+
+  <!-- Stats Widget ****************** -->
+
+  <Stats
+    stats={[
+      { title: 'Downloads', amount: '2.8k' },
+      { title: 'Stars', amount: '150+' },
+      { title: 'Speed Index', amount: '1.1s' },
+    ]}
+  />
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Quick Start',
+        href: 'https://github.com/kittendevv/Invio/wiki/Quick-Start',
+        target: '_blank',
+        icon: 'tabler:rocket',
+      },
+      {
+        variant: 'secondary',
+        text: 'Full Guide',
+        href: 'https://github.com/kittendevv/Invio/wiki/Deployment',
+        target: '_blank',
+        icon: 'tabler:book',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Download Invio now
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Ready to ditch the bloated alternatives? Invio is just what you need.
+    </Fragment>
+  </CallToAction>
+</Layout>

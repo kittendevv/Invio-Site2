@@ -1,0 +1,81 @@
+---
+import Image from '~/components/common/Image.astro';
+
+const {
+  id,
+  images = [],
+  speed = 40, // seconds per full loop
+} = Astro.props;
+---
+
+<section class="relative py-16 overflow-hidden" {...(id ? { id } : {})}>
+  <!-- Fade edges -->
+  <div class="absolute left-0 top-0 w-52 h-full pointer-events-none z-10 bg-gradient-to-r from-[var(--aw-color-bg-page)] to-transparent"></div>
+  <div class="absolute right-0 top-0 w-52 h-full pointer-events-none z-10 bg-gradient-to-l from-[var(--aw-color-bg-page)] to-transparent"></div>
+
+  <!-- Carousel -->
+  <div
+    class="flex whitespace-nowrap animate-scroll will-change-transform"
+    style={`--scroll-speed: ${speed}s;`}
+  >
+    {images.concat(images).map((img) => (
+      <div class="inline-block px-6 transition-transform duration-300 hover:scale-[1.03]" style="flex: 0 0 auto;">
+        <Image
+          class="rounded-lg shadow-md object-contain bg-white"
+          src={img.src}
+          alt={img.alt || 'Invoice preview'}
+          width={img.width ? Number(img.width) : 297.75}
+          height={img.height ? Number(img.height) : 421.125}
+          loading="lazy"
+        />
+      </div>
+    ))}
+  </div>
+
+  <style>
+    /* Infinite smooth scroll */
+    @keyframes scroll {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(-100%);
+      }
+    }
+
+    .animate-scroll {
+      animation: scroll var(--scroll-speed) linear infinite;
+    }
+
+    section:hover .animate-scroll {
+      animation-play-state: paused;
+    }
+
+    /* Make sure content is twice as wide to prevent snapping */
+    .animate-scroll > * {
+      flex: 0 0 auto;
+    }
+
+    /* Fade edges, moved slightly inward */
+    section::before,
+    section::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 12%;
+      height: 100%;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    section::before {
+      left: 0;
+      background: linear-gradient(to right, var(--aw-color-bg-page) 0%, transparent 100%);
+    }
+
+    section::after {
+      right: 0;
+      background: linear-gradient(to left, var(--aw-color-bg-page) 0%, transparent 100%);
+    }
+  </style>
+</section>
