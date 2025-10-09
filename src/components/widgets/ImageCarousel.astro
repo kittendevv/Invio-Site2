@@ -1,39 +1,56 @@
 ---
 import Image from '~/components/common/Image.astro';
-
 const {
   id,
   images = [],
   speed = 40, // seconds per full loop
 } = Astro.props;
 ---
-
 <section class="relative py-16 overflow-hidden" {...(id ? { id } : {})}>
   <!-- Fade edges -->
-  <div class="absolute left-0 top-0 w-52 h-full pointer-events-none z-10 bg-gradient-to-r from-[var(--aw-color-bg-page)] to-transparent"></div>
-  <div class="absolute right-0 top-0 w-52 h-full pointer-events-none z-10 bg-gradient-to-l from-[var(--aw-color-bg-page)] to-transparent"></div>
-
-  <!-- Carousel -->
-  <div
-    class="flex whitespace-nowrap animate-scroll will-change-transform"
-    style={`--scroll-speed: ${speed}s;`}
-  >
-    {images.concat(images).map((img) => (
-      <div class="inline-block px-6 transition-transform duration-300 hover:scale-[1.03]" style="flex: 0 0 auto;">
-        <Image
-          class="rounded-lg shadow-md object-contain bg-white"
-          src={img.src}
-          alt={img.alt || 'Invoice preview'}
-          width={img.width ? Number(img.width) : 297.75}
-          height={img.height ? Number(img.height) : 421.125}
-          loading="lazy"
-        />
+  <div class="absolute left-0 top-0 pointer-events-none z-10 bg-gradient-to-r from-[var(--aw-color-bg-page)] to-transparent fade-edge"></div>
+  <div class="absolute right-0 top-0 pointer-events-none z-10 bg-gradient-to-l from-[var(--aw-color-bg-page)] to-transparent fade-edge"></div>
+  
+  <!-- Carousel wrapper -->
+  <div class="carousel-wrapper">
+    <div class="carousel-container" style={`--scroll-speed: ${speed}s;`}>
+      <!-- First loop -->
+      <div class="carousel-track animate-scroll">
+        {images.map((img) => (
+          <div class="carousel-item">
+            <Image
+              class="invoice-img rounded-lg shadow-md object-contain bg-white"
+              src={img.src}
+              alt={img.alt || 'Invoice preview'}
+              width={img.width ? Number(img.width) : 297.75}
+              height={img.height ? Number(img.height) : 421.125}
+              loading="lazy"
+            />
+          </div>
+        ))}
       </div>
-    ))}
+      <!-- Second loop (duplicate for seamless scroll) -->
+      <div class="carousel-track animate-scroll">
+        {images.map((img) => (
+          <div class="carousel-item">
+            <Image
+              class="invoice-img rounded-lg shadow-md object-contain bg-white"
+              src={img.src}
+              alt={img.alt || 'Invoice preview'}
+              width={img.width ? Number(img.width) : 297.75}
+              height={img.height ? Number(img.height) : 421.125}
+              loading="lazy"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
   </div>
 
   <style>
-    /* Infinite smooth scroll */
+    /* ==========================
+       SCROLL ANIMATION
+    ========================== */
     @keyframes scroll {
       from {
         transform: translateX(0);
@@ -42,40 +59,54 @@ const {
         transform: translateX(-100%);
       }
     }
-
+    
     .animate-scroll {
       animation: scroll var(--scroll-speed) linear infinite;
     }
-
+    
     section:hover .animate-scroll {
       animation-play-state: paused;
     }
-
-    /* Make sure content is twice as wide to prevent snapping */
-    .animate-scroll > * {
+    
+    /* ==========================
+       LAYOUT + FADE
+    ========================== */
+    .carousel-wrapper {
+      overflow: hidden;
+      width: 100%;
+    }
+    
+    .carousel-container {
+      display: flex;
+      width: fit-content;
+    }
+    
+    .carousel-track {
+      display: flex;
+      flex-shrink: 0;
+    }
+    
+    .carousel-item {
       flex: 0 0 auto;
+      padding-inline: clamp(0.5rem, 1vw, 1rem);
     }
-
-    /* Fade edges, moved slightly inward */
-    section::before,
-    section::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      width: 12%;
+    
+    .invoice-img {
+      width: clamp(140px, 28vw, 420px);
+      aspect-ratio: 210 / 297;
+      height: auto;
+    }
+    
+    /* Smaller on mobile */
+    @media (max-width: 640px) {
+      .invoice-img {
+        width: clamp(120px, 35vw, 200px);
+      }
+    }
+    
+    .fade-edge {
+      width: clamp(60px, 10vw, 180px);
       height: 100%;
-      z-index: 10;
-      pointer-events: none;
-    }
-
-    section::before {
-      left: 0;
-      background: linear-gradient(to right, var(--aw-color-bg-page) 0%, transparent 100%);
-    }
-
-    section::after {
-      right: 0;
-      background: linear-gradient(to left, var(--aw-color-bg-page) 0%, transparent 100%);
     }
   </style>
 </section>

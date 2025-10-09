@@ -2,11 +2,13 @@
 import Layout from '~/layouts/PageLayout.astro';
 
 import Hero from '~/components/widgets/Hero.astro';
+import Note from '~/components/widgets/Note.astro';
 import Features from '~/components/widgets/Features.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import ImageCarousel from '~/components/widgets/ImageCarousel.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
 
 const metadata = {
   title: 'Invio — Self-hosted invoicing without the bloat',
@@ -35,19 +37,23 @@ const metadata = {
     </Fragment>
   </Hero>
 
+  <Note
+  title="Featured on Marius Hosting"
+  description="Invio got it's very own instalation guide by Marius Hosting!"
+/>
   <ImageCarousel
       id="gallery"
       images={[
         { src: '~/assets/images/invoices/1.png', alt: 'Invoice 1' },
-        { src: '~/assets/images/invoices/2.png', alt: 'Invoice 2' },
-        { src: '~/assets/images/invoices/3.png', alt: 'Invoice 3' },
-        { src: '~/assets/images/invoices/4.png', alt: 'Invoice 4' },
-        { src: '~/assets/images/invoices/5.png', alt: 'Invoice 5' },
-        { src: '~/assets/images/invoices/6.png', alt: 'Invoice 6' },
-        { src: '~/assets/images/invoices/7.png', alt: 'Invoice 7' },
+        { src: '~/assets/images/invoices/3.png', alt: 'Invoice 2' },
+        { src: '~/assets/images/invoices/5.png', alt: 'Invoice 3' },
+        { src: '~/assets/images/invoices/7.png', alt: 'Invoice 4' },
+        { src: '~/assets/images/invoices/2.png', alt: 'Invoice 5' },
+        { src: '~/assets/images/invoices/4.png', alt: 'Invoice 6' },
+        { src: '~/assets/images/invoices/6.png', alt: 'Invoice 7' },
         { src: '~/assets/images/invoices/8.png', alt: 'Invoice 8' },
       ]}
-      speed={10}
+      speed={15}
     />
   <!-- Features Widget *************** -->
 
@@ -79,6 +85,28 @@ const metadata = {
         description:
           'Share a secure public link—no accounts or passwords required to view invoices.',
         icon: 'tabler:mood-smile',
+      },
+    ]}
+  />
+
+  <Testimonials
+    title="Why Users Love Invio"
+    testimonials={[
+      {
+        testimonial: `Man this is great, please keep improving it, it's incredible.`,
+        name: 'u/Equal-Ad-2481',
+        job: 'Reddit User',
+      },
+      {
+        testimonial: `Invio is a fast, self-hosted invoicing application designed for simplicity and transparency, allowing users to maintain full control over their data and deploy it anywhere.`,
+        name: 'Marius Hosting',
+        job: 'Content Creator',
+      },
+      {
+        testimonial:
+          'It is a joy to use this with screen readers, the UI is very minimalist but everything is labelled and works like a charm. Thank you! ',
+        name: 'u/flameborn',
+        job: 'Reddit User',
       },
     ]}
   />
