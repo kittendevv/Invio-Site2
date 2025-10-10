@@ -1,17 +1,7 @@
 import { getPermalink } from './utils/permalinks';
 
 export const headerData = {
-  links: [
-    {
-      text: 'Templates',
-      href: '#',
-    },
-    {
-      text: 'Docs',
-      href: 'https://github.com/kittendevv/Invio/wiki',
-    },
-  ],
-  actions: [{ text: 'Github', href: 'https://github.com/kittendevv/Invio', target: '_blank' }],
+  actions: [{ text: 'Documentation', href: 'https://github.com/kittendevv/Invio/wiki', target: '_blank' }],
 };
 
 export const footerData = {

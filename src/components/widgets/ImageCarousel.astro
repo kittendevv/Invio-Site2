@@ -48,9 +48,6 @@ const {
   </div>
 
   <style>
-    /* ==========================
-       SCROLL ANIMATION
-    ========================== */
     @keyframes scroll {
       from {
         transform: translateX(0);
@@ -59,54 +56,64 @@ const {
         transform: translateX(-100%);
       }
     }
-    
+
     .animate-scroll {
       animation: scroll var(--scroll-speed) linear infinite;
     }
-    
+
     section:hover .animate-scroll {
       animation-play-state: paused;
     }
-    
-    /* ==========================
-       LAYOUT + FADE
-    ========================== */
+
     .carousel-wrapper {
-      overflow: hidden;
+      overflow: visible; /* <-- changed */
       width: 100%;
     }
-    
+
     .carousel-container {
       display: flex;
       width: fit-content;
+      overflow: visible; /* <-- added */
     }
-    
+
     .carousel-track {
       display: flex;
       flex-shrink: 0;
+      overflow: visible; /* <-- added */
     }
-    
+
     .carousel-item {
       flex: 0 0 auto;
       padding-inline: clamp(0.5rem, 1vw, 1rem);
+      overflow: visible;
+      position: relative;
     }
-    
+
     .invoice-img {
       width: clamp(140px, 28vw, 420px);
       aspect-ratio: 210 / 297;
       height: auto;
+      transition: transform 0.18s cubic-bezier(.6,.2,.3,1), box-shadow 0.18s cubic-bezier(.6,.2,.3,1);
+      will-change: transform;
+      z-index: 0;
+      display: block;
     }
-    
-    /* Smaller on mobile */
+    .invoice-img:hover {
+      transform: scale(1.055);
+      z-index: 2;
+      box-shadow: 0 2px 24px 0 rgba(0,0,0,0.18);
+    }
+
     @media (max-width: 640px) {
       .invoice-img {
         width: clamp(120px, 35vw, 200px);
       }
     }
-    
+
     .fade-edge {
       width: clamp(60px, 10vw, 180px);
       height: 100%;
+      pointer-events: none;
     }
   </style>
 </section>
