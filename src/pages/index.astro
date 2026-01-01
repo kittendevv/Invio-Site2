@@ -1,9 +1,6 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import { getCollection } from 'astro:content';
-
 import Hero from '~/components/widgets/Hero.astro';
-import Note from '~/components/widgets/Note.astro';
 import Features from '~/components/widgets/Features.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import Stats from '~/components/widgets/Stats.astro';
@@ -76,31 +73,29 @@ const metadata = {
       },
       { text: 'Try Demo', href: 'https://demo.invio.dev' },
     ]}
-    image={{ src: '~/assets/images/dashboard-screenshot.png', alt: 'Invio Dashboard Screenshot' }}
   >
     <Fragment slot="title">
       Self-hosted invoicing without the <span style="color: var(--aw-color-primary);">bloat</span>
     </Fragment>
+
+    <Fragment slot="image">
+      <ImageCarousel
+        id="gallery"
+        images={[
+          { src: '~/assets/images/invoices/1.png', alt: 'Invoice 1' },
+          { src: '~/assets/images/invoices/3.png', alt: 'Invoice 2' },
+          { src: '~/assets/images/invoices/5.png', alt: 'Invoice 3' },
+          { src: '~/assets/images/invoices/7.png', alt: 'Invoice 4' },
+          { src: '~/assets/images/invoices/2.png', alt: 'Invoice 5' },
+          { src: '~/assets/images/invoices/4.png', alt: 'Invoice 6' },
+          { src: '~/assets/images/invoices/6.png', alt: 'Invoice 7' },
+          { src: '~/assets/images/invoices/8.png', alt: 'Invoice 8' },
+        ]}
+        speed={15}
+      />
+    </Fragment>
   </Hero>
 
-  <Note
-  title="Featured on Marius Hosting"
-  description="Invio got it's very own instalation guide by Marius Hosting!"
-/>
-  <ImageCarousel
-      id="gallery"
-      images={[
-        { src: '~/assets/images/invoices/1.png', alt: 'Invoice 1' },
-        { src: '~/assets/images/invoices/3.png', alt: 'Invoice 2' },
-        { src: '~/assets/images/invoices/5.png', alt: 'Invoice 3' },
-        { src: '~/assets/images/invoices/7.png', alt: 'Invoice 4' },
-        { src: '~/assets/images/invoices/2.png', alt: 'Invoice 5' },
-        { src: '~/assets/images/invoices/4.png', alt: 'Invoice 6' },
-        { src: '~/assets/images/invoices/6.png', alt: 'Invoice 7' },
-        { src: '~/assets/images/invoices/8.png', alt: 'Invoice 8' },
-      ]}
-      speed={15}
-    />
   <!-- Features Widget *************** -->
 
   <Features
