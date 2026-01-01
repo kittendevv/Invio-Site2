@@ -66,3 +66,5 @@ analytics:
 
 ui:
   theme: 'system' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"
+api:
+  statsUrl: 'http://localhost:3000/api/all' # URL to fetch stats data from

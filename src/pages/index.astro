@@ -1,5 +1,6 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
+import { getCollection } from 'astro:content';
 
 import Hero from '~/components/widgets/Hero.astro';
 import Note from '~/components/widgets/Note.astro';
@@ -9,6 +10,51 @@ import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import ImageCarousel from '~/components/widgets/ImageCarousel.astro';
 import Testimonials from '~/components/widgets/Testimonials.astro';
+
+import type { Stat } from '~/types';
+
+// Import config
+import { load as loadYaml } from 'js-yaml';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+// Load config file
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const configPath = join(__dirname, '../config.yaml');
+const configContent = readFileSync(configPath, 'utf-8');
+const config = loadYaml(configContent) as any;
+const statsUrl = config?.api?.statsUrl || 'http://localhost:3000/api/all';
+
+// Fetch stats data
+let stats: Stat[] = [];
+const labelMap: Record<string, string> = {
+  'invio-package-downloads': 'Downloads',
+  'invio-stars': 'Stars',
+};
+
+try {
+  const response = await fetch(statsUrl);
+  if (response.ok) {
+    const data = await response.json();
+    // Transform API response to Stats format with proper labels
+    stats = Object.entries(data).map(([key, item]: [string, any]) => ({
+      title: labelMap[item.id] || item.id?.replace(/-/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase()) || '',
+      amount: item.formatted || item.value || '',
+    }));
+    // Add Speed Index as static stat
+    stats.push({ title: 'Speed Index', amount: '0.4s' });
+  }
+} catch (error) {
+  console.warn(`Failed to fetch stats from ${statsUrl}:`, error);
+  // Fallback to default stats
+  stats = [
+    { title: 'Downloads', amount: '2.8k' },
+    { title: 'Stars', amount: '150+' },
+    { title: 'Speed Index', amount: '0.4s' },
+  ];
+}
 
 const metadata = {
   title: 'Invio — Self-hosted invoicing without the bloat',
@@ -24,7 +70,7 @@ const metadata = {
       {
         variant: 'primary',
         text: 'View on Github',
-        href: 'https://github.com/arthelokyo/astrowind',
+        href: 'https://github.com/kittendevv/Invio',
         target: '_blank',
         icon: 'tabler:brand-github',
       },
@@ -144,11 +190,7 @@ const metadata = {
   <!-- Stats Widget ****************** -->
 
   <Stats
-    stats={[
-      { title: 'Downloads', amount: '2.8k' },
-      { title: 'Stars', amount: '150+' },
-      { title: 'Speed Index', amount: '1.1s' },
-    ]}
+    stats={stats}
   />
 
   <!-- CallToAction Widget *********** -->
